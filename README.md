@@ -2,13 +2,71 @@
 
 A Node.js/Express API for creating and managing customer orders with PostgreSQL.
 
-## Installation
+## Requirements
+
+### Docker
+
+Docker Desktop is recommended for running the application and PostgreSQL database.
+
+### Local development
+
+If you prefer to run Node.js outside Docker:
+
+- Node.js
+- PostgreSQL
+
+## Run with Docker
+
+Clone the repository and navigate to the project directory:
+
+```bash
+git clone <repository-url>
+cd farm2feed
+```
+
+Start the API and PostgreSQL database:
+
+```bash
+docker compose up --build
+```
+
+The API runs on: http://localhost:3000
+
+The PostgreSQL database runs on:
+
+```text
+localhost:5432
+```
+
+The Docker setup creates a PostgreSQL database named `farm_to_feed`.
+
+The database schema is initialized automatically from:
+
+```text
+config/schema.sql
+```
+
+To stop the application:
+
+```bash
+docker compose down
+```
+
+To stop the application and remove the PostgreSQL volume:
+
+```bash
+docker compose down -v
+```
+
+> Removing the volume deletes the Dockerized database data.
+
+## Run without Docker
+
+Install dependencies:
 
 ```bash
 npm install
 ```
-
-## Run
 
 Create a `.env` file:
 
@@ -21,27 +79,47 @@ DB_PASSWORD=your_password
 DB_NAME=farm_to_feed
 ```
 
+Make sure PostgreSQL is running and the `farm_to_feed` database has been initialized using:
+
+```text
+config/schema.sql
+```
+
 Start the application:
 
 ```bash
 node app.js
 ```
 
-The API runs on `http://localhost:3000`.
-
 ## Database Configuration
 
-The application uses PostgreSQL. Configure the database connection using the `.env` variables above.
+The application uses PostgreSQL.
 
-The database should contain the `customers`, `products`, `orders`, and `order_items` tables.
+When running with Docker Compose, the database is provided by the PostgreSQL container and initialized using `config/schema.sql`.
+
+When running Node.js directly on the host machine, the database connection is configured using the `.env` variables.
+
+The database contains:
+
+- `customers`
+- `products`
+- `orders`
+- `order_items`
 
 ## Tests
+
+Run the test suite with:
 
 ```bash
 npm test -- --no-watchman
 ```
 
-Tests cover order calculations, discount boundaries, validation, and order-status transitions.
+Tests cover:
+
+- Order calculations
+- Discount boundaries
+- Input validation
+- Order-status transitions
 
 ## API Endpoints
 
@@ -66,6 +144,8 @@ Tests cover order calculations, discount boundaries, validation, and order-statu
 - PostgreSQL transactions are used to create an order and its items atomically.
 - Database constraints are used as an additional layer of validation.
 - Monetary values are stored using PostgreSQL numeric/decimal types.
+- Docker Compose provides a reproducible PostgreSQL environment for development and evaluation.
+- The database schema is stored in the repository so the database can be recreated consistently.
 
 ## Improvements
 
