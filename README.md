@@ -149,11 +149,12 @@ Tests cover:
 
 ## Improvements
 
-With more time, I would add:
+With more time, I would:
 
-- More integration tests against PostgreSQL.
-- Request validation with a validation library.
-- Database migrations.
-- Pagination and filtering for order listing.
-- Stronger idempotency validation using request-body fingerprints.
-- Authentication and authorization.
+Complete and integrate the API routes with the service and database layers.
+Add integration tests against PostgreSQL.
+Add request validation with a validation library.
+Add database migrations.
+Add pagination and filtering for order listing.
+Strengthen idempotency by validating request-body fingerprints.
+Add authentication and authorization.
